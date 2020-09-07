@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Animation</title>
+  <style type="text/css">
+    body {
+      margin: 4;
+      padding:3;
+      background: rgb(233, 99, 99);
+      align-items: center;
+    };
+
+    
+
+    #canvas {
+      background: rgb(89, 35, 238);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      box-shadow: 0 0 10px 0 rgb(236, 234, 234);
+    }
+  </style>
+  <script type="text/javascript">
+    function init() {
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+      var w = canvas.width;
+      var h = canvas.height;
+      var pic = new Image();
+      pic.src = "img1.jpg";
+      var flakes = []; 
+      
+      function snowfall() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(pic, 0 ,0);
+        addflake();
+        snow();
+
+      };
+      function addflake() {
+        var x = Math.ceil(Math.random() * w);
+        var s = Math.ceil(Math.random() * 4);
+       flakes.push({ "x": x, "y": 0, "s": s });
+
+      };
+      function snow() {
+        for (var i = 0; i < flakes.length; i++) {
+          var flake = flakes[i];
+          ctx.beginPath();
+          ctx.fillstyle = "rgb(139, 241, 202)";
+          ctx.arc(flake.x, flakes[i].y+=flake.s/2, flake.s/2, 0, 2 * Math.PI);
+          ctx.fill();
+          if (flakes[i].y > h) {
+            flakes.splice(i, 1);
+          }
+        };
+      };
+      setInterval(snowfall, 20);
+
+    };
+    window.onload = init;
+  </script>
+
+</head>
+<body>
+  <canvas id="canvas" height="278" width="499"></canvas>
+</body>
+
+
+
+</html>
